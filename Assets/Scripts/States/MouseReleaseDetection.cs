@@ -4,14 +4,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Actions/MouseClickDetection")]
-public class MouseClickDetection : Action
+[CreateAssetMenu(menuName = "Actions/MouseReleaseDetection")]
+public class MouseReleaseDetection : Action
 {
     public override void Execute(float d)
     {
-        if (Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(0))
         {
-            if (!GameManager.Instance.clicking)
+            if (GameManager.Instance.clicking)
             {
                 PointerEventData pointerData = new PointerEventData(EventSystem.current);
                 pointerData.position = Input.mousePosition;
@@ -27,12 +27,12 @@ public class MouseClickDetection : Action
                     IClickable c = r.gameObject.GetComponentInParent<IClickable>();
                     if (c != null)
                     {
-                        c.OnClick();
+                        c.OnRelease();
                         break;
                     }
                 }
             }
-            GameManager.Instance.clicking = true;
+            GameManager.Instance.clicking = false;
         }
     }
 }

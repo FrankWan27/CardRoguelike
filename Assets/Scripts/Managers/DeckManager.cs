@@ -29,7 +29,7 @@ public class DeckManager : MonoBehaviour
     public CardVariable Pop()
     {
         if (isEmpty())
-            return null;
+            RefillFromDiscard();
 
         CardVariable c = deck[index - 1];
         deck.RemoveAt(index - 1);
@@ -40,7 +40,16 @@ public class DeckManager : MonoBehaviour
         return c;
     }
 
-    //hm
+    void RefillFromDiscard()
+    {
+        //Draw entire discard pile
+        while(!DiscardManager.Instance.isEmpty())
+        {
+            AddCard(DiscardManager.Instance.PopRandom());
+        }
+    }
+
+
     private void Populate()
     {
         for (int i = 0; i < 8; i++)
@@ -59,16 +68,8 @@ public class DeckManager : MonoBehaviour
         UpdateText();
     }
 
-    public bool isEmpty()
-    {
-        if (index <= 0)
-            return true;
-        return false;
-    }
+    public bool isEmpty() => index <= 0;
 
     //Updates Remaining Card Count to GUI
-    void UpdateText()
-    {
-        remainingText.text = index.ToString();
-    }
+    void UpdateText() => remainingText.text = index.ToString();
 }

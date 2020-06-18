@@ -15,7 +15,6 @@ public class HealthDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        UpdateDisplay();
         Instance = this;
     }
 

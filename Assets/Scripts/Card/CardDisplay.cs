@@ -27,9 +27,13 @@ public class CardDisplay : MonoBehaviour
 
     private void LoadCardData()
     {
-        nameText.text = card.name;
-        descText.text = card.description;
-        artImage.sprite = card.artwork;
-        costText.text = card.cost.ToString();
+        if(nameText != null)
+            nameText.text = card.name;
+        if(descText != null)
+            descText.text = card.description;
+        if(artImage != null)
+            artImage.sprite = card.artwork;
+        if(costText != null)
+            costText.text = card.cost.ToString();
     }
 }

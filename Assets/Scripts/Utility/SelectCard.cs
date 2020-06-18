@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class SelectCard : MonoBehaviour
 {
-    public CardVariable currentCard;
-    public CardDisplay cardDisp;
+    public CardObject cardObj;
 
     public Transform mTransform;
 
-
-    public void loadCard()
+    public void SetObject(CardObject cardObj)
     {
-        if (currentCard == null)
-            return;
-
-        cardDisp.gameObject.SetActive(true);
-    }
-
-    private void Start()
-    {
-        mTransform = this.transform;
-        cardDisp.gameObject.SetActive(false);
+        this.cardObj = cardObj;
+        mTransform = cardObj.transform;
     }
 
     private void Update()

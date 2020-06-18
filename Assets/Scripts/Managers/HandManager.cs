@@ -5,17 +5,10 @@ using UnityEngine;
 public class HandManager : MonoBehaviour
 {
 
-    public DeckManager dm;
-
     List<CardVariable> hand;
     public int maxHandSize;
 
     public static HandManager Instance { get; private set; }
-
-
-    //1920x1080
-    private const int LEFTBOUND = 200;
-    private const int RIGHTBOUND = 1920 - 200;
 
 
     void Awake()
@@ -34,7 +27,7 @@ public class HandManager : MonoBehaviour
     //draws one card
     public void Draw()
     {
-        CardVariable cardVar = dm.Pop();
+        CardVariable cardVar = DeckManager.Instance.Pop();
         
         //Out of cards
         if (cardVar == null)
@@ -43,6 +36,12 @@ public class HandManager : MonoBehaviour
         cardVar.CreateObject();
 
         hand.Add(cardVar);
+        UpdateCardLayout();
+    }
+
+    public void RemoveCard(CardVariable cardVar)
+    {
+        hand.Remove(cardVar);
     }
 
     // Update is called once per frame
@@ -52,17 +51,17 @@ public class HandManager : MonoBehaviour
         {
             Draw();
         }
-        if(hand.Count > 0)
-            UpdateCardLayout();
     }
 
-    void UpdateCardLayout()
+    public void UpdateCardLayout()
     {
-        float spacing = (RIGHTBOUND - LEFTBOUND) / (hand.Count + 1);
+        if (hand.Count <= 0)
+            return;
+
+        float spacing = (Defs.HAND_RIGHT - Defs.HAND_LEFT) / (hand.Count + 1);
         for (int i = 0; i < hand.Count; i++)
         {
-            Vector3 cardPos = hand[i].cardObject.transform.position;
-            hand[i].cardObject.transform.position = new Vector3(LEFTBOUND + spacing * (i + 1), cardPos.y, cardPos.z);
+            hand[i].cardObject.transform.position = new Vector3(Defs.HAND_LEFT + spacing * (i + 1), transform.position.y, transform.position.z);
         }
     }
 }

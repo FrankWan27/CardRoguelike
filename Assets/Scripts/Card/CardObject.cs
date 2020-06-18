@@ -27,6 +27,14 @@ public class CardObject : MonoBehaviour, IClickable
         currentLogic.OnClick(this);
     }
 
+    public void OnRelease()
+    {
+        if (currentLogic == null)
+            return;
+
+        currentLogic.OnRelease(this);
+    }
+
     public void OnHover()
     {
         if (currentLogic == null)
@@ -34,8 +42,5 @@ public class CardObject : MonoBehaviour, IClickable
         
         currentLogic.OnHover(this);
     }
-
-    // Use this for initialization
-
 }
     
